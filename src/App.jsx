@@ -4,8 +4,8 @@ import IncidentList from "./components/IncidentList";
 import "./index.css"; // Garante que o CSS seja carregado
 
 const initial = [
-  { id: 1, title: "Sem acesso ao ERP", priority: "Alta", resolved: false },
-  { id: 2, title: "Impressora offline", priority: "Baixa", resolved: false }
+  { id: 1, title: "Sem acesso ao ERP", priority: "alta", resolved: false },
+  { id: 2, title: "Impressora offline", priority: "baixa", resolved: false }
 ];
 
 export default function App() {
@@ -36,7 +36,7 @@ export default function App() {
     setIncidents((prev) => prev.filter((i) => i.id !== id));
 
   return (
-    <main className="conteiner">
+    <main className="container">
       <h1>Painel de Incidentes</h1>
       <form onSubmit={handleAdd} className="row">
         <input

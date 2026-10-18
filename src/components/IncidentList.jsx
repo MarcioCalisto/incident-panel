@@ -1,5 +1,5 @@
 // src/components/IncidentList.jsx
-import IncidenteItem from "./IncidentItem.jsx";
+import IncidentItem from "./IncidentItem.jsx";
 
 // CORREÇÃO: Certifique-se de usar "incidents" (plural)
 export default function IncidentList ({ incidents, onToggle, onRemove }) {

@@ -7,7 +7,7 @@ export function validateIncident(values) {
     const description = values.description?.trim() ?? "";
 
     if (title.length < 5){
-        errors.title = "O título devo ter pelo menos 5 caracteres.";
+        errors.title = "O título deve ter pelo menos 5 caracteres.";
     } else if (title.length > 80) {
         errors.title = "O título deve ter no máximo 80 caractereres"
     }

@@ -1,11 +1,11 @@
 // src/components/IncidentForm.jsx
-import { useState } from `react`;
-import { PRIORITES, hasErrors, validateIncident } from '../utils/valideteIncident';
+import { useState } from 'react';
+import { PRIORITES, hasErrors, validateIncident } from '../utils/validateIncident';
 
 const  EMPTY = {title: "", description: "", priority: "media"};
 
-export default function incidentForm({ onSubmit, initalValues = EMPTY}) {
-    const [values, setValues] = useState(initalValues);
+export default function IncidentForm({ onSubmit, initialValues = EMPTY}) {
+    const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
     const [submitting, setSubmitting] = useState(false);
@@ -47,20 +47,20 @@ export default function incidentForm({ onSubmit, initalValues = EMPTY}) {
     const showError = (name) => touched[name] && errors[name];
 
     return (
-        <form onSubmit={handleSubmit} notValidate className="form">
+        <form onSubmit={handleSubmit} noValidate className="form">
             <div className="field">
                 <label htmlFor="title">Título</label>
                 <input 
                     id="title"
                     name="title"
                     value={values.title}
-                    onChane={handleChange}
-                    onBlue={handleBlur}
+                    onChange={handleChange}
+                    onBlu={handleBlur}
                     aria-invalid={Boolean(showError("title"))}
                     aria-describedby="title-error"
                 />
                 {showError("title") && (
-                    <p id="title=error" role="alert" className="error">{errors.title}</p>
+                    <p id="title-error" role="alert" className="error">{errors.title}</p>
                 )}
             </div>
 
@@ -69,8 +69,8 @@ export default function incidentForm({ onSubmit, initalValues = EMPTY}) {
                 <textarea
                     id="description"
                     name="description"
-                    row={3}
-                    value={values.decription}
+                    rows={3}
+                    value={values.description}
                     onChange={handleChange}
                     onBlur={handleBlur}
                  />
