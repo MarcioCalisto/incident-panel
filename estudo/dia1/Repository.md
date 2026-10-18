@@ -1,10 +1,4 @@
-# Análise do código `IncidentForm.jsx`
-
-Este documento explica os principais recursos de JavaScript e React
-utilizados no componente `IncidentForm.jsx`, como eles se comunicam e
-quais erros precisam ser corrigidos.
-
-## 1. `import` e `export default`
+### 1. `import` e `export default`
 
 -   **Código:**
 
