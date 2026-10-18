@@ -34,13 +34,15 @@ export function useIncidents () {
     }, []);
 
     const update = useCallback(async (id, changes) => {
-        const update = await incidentsApi.update(id, changes);
-        setIncidents((prev) => prev.filter((i) => (i.Id === id ? update : i)));
-        return update;
+        const updated = await incidentsApi.update(id, changes);
+        // ERRADO antes: "? update : i" colocava a FUNÇÃO no array.
+        // CERTO: substitui o item pelo retorno da API. O "...i" preserva campos que a API não devolveu.
+        setIncidents((prev) => prev.map((i) => (i.id === id ? { ...i, ...updated } : i)));
+        return updated;
     }, []);
 
     const remove = useCallback(async (id) => {
-        const remove = await incidentsApi.remove(id);
+        await incidentsApi.remove(id);
         setIncidents((prev) => prev.filter((i) => i.id !== id));
     }, []);
 

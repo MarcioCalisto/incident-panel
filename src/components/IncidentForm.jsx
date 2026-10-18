@@ -2,9 +2,9 @@
 import { useState } from 'react';
 import { PRIORITES, hasErrors, validateIncident } from '../utils/validateIncident';
 
-const  EMPTY = {title: "", description: "", priority: "media"};
+const EMPTY = { title: "", description: "", priority: "media" };
 
-export default function IncidentForm({ onSubmit, initialValues = EMPTY}) {
+export default function IncidentForm({ onSubmit, initialValues = EMPTY }) {
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
@@ -13,14 +13,14 @@ export default function IncidentForm({ onSubmit, initialValues = EMPTY}) {
 
     function handleChange(event) {
         const { name, value } = event.target;
-        const next = {...values, [name]: value};
+        const next = { ...values, [name]: value };
         setValues(next);
         if (touched[name]) setErrors(validateIncident(next));
     }
 
     function handleBlur(event) {
         const { name } = event.target;
-        setTouched((prev) => ({...prev, [name]: true}));
+        setTouched((prev) => ({ ...prev, [name]: true }));
         setErrors(validateIncident(values));
     }
 
@@ -28,19 +28,20 @@ export default function IncidentForm({ onSubmit, initialValues = EMPTY}) {
         event.preventDefault();
         const found = validateIncident(values);
         setErrors(found);
-        setTouched({title: true, description: true, priority: true});
+        setTouched({ title: true, description: true, priority: true });
         if (hasErrors(found)) return;
 
         setSubmitting(true);
         setSubmitError("");
         try {
-            await onSubmit({...values, title: values.title.trim()});
+            await onSubmit({ ...values, title: values.title.trim() });
             setValues(EMPTY);
             setTouched({});
+            setErrors({});                 // ALTERADO (a): limpa erros antigos após salvar
         } catch (error) {
             setSubmitError(error.message || "Não foi possível salvar o incidente");
         } finally {
-            setSubmitting(false)
+            setSubmitting(false);
         }
     }
 
@@ -50,14 +51,14 @@ export default function IncidentForm({ onSubmit, initialValues = EMPTY}) {
         <form onSubmit={handleSubmit} noValidate className="form">
             <div className="field">
                 <label htmlFor="title">Título</label>
-                <input 
+                <input
                     id="title"
                     name="title"
                     value={values.title}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     aria-invalid={Boolean(showError("title"))}
-                    aria-describedby="title-error"
+                    aria-describedby={showError("title") ? "title-error" : undefined}   // ALTERADO (b): só aponta quando o erro existe
                 />
                 {showError("title") && (
                     <p id="title-error" role="alert" className="error">{errors.title}</p>
@@ -73,10 +74,12 @@ export default function IncidentForm({ onSubmit, initialValues = EMPTY}) {
                     value={values.description}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                 />
-                 {showError("description") && (
+                    aria-invalid={Boolean(showError("description"))}                    // ALTERADO (c)
+                    aria-describedby={showError("description") ? "description-error" : undefined}  // ALTERADO (c)
+                />
+                {showError("description") && (
                     <p id="description-error" role="alert" className="error">{errors.description}</p>
-                 )}
+                )}
             </div>
 
             <div className="field">
@@ -93,12 +96,15 @@ export default function IncidentForm({ onSubmit, initialValues = EMPTY}) {
                         <option key={p} value={p}>{p}</option>
                     ))}
                 </select>
+                {showError("priority") && (                                             // ALTERADO (d): exibe o erro da prioridade
+                    <p id="priority-error" role="alert" className="error">{errors.priority}</p>
+                )}
             </div>
 
             {submitError && <p role="alert" className="error">{submitError}</p>}
 
             <button type="submit" disabled={submitting}>
-                {submitting ? "Salvando..." : "Salvar incidente" }
+                {submitting ? "Salvando..." : "Salvar incidente"}
             </button>
         </form>
     );
