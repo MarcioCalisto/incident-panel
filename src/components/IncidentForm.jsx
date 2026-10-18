@@ -55,7 +55,7 @@ export default function IncidentForm({ onSubmit, initialValues = EMPTY}) {
                     name="title"
                     value={values.title}
                     onChange={handleChange}
-                    onBlu={handleBlur}
+                    onBlur={handleBlur}
                     aria-invalid={Boolean(showError("title"))}
                     aria-describedby="title-error"
                 />
