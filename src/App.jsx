@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import IncidentForm from "./components/IncidentForm.jsx";
 import IncidentList from "./components/IncidentList";
-import "./index.css"; // Garante que o CSS seja carregado
 
 const initial = [
   { id: 1, title: "Sem acesso ao ERP", priority: "alta", resolved: false },
