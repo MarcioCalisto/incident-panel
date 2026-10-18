@@ -11,7 +11,7 @@ export default function IncidentList ({ incidents, onToggle, onRemove }) {
         <ul className="list">
             {/* CORREÇÃO: Alterado de incident.map para incidents.map */}
             {incidents.map((incident) => (
-                <IncidenteItem
+                <IncidentItem
                     key={incident.id}
                     incident={incident}
                     onToggle={onToggle}
