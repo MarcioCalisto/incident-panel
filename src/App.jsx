@@ -1,5 +1,6 @@
 // src/App.jsx
 import { useEffect, useState } from "react";
+import IncidentForm from "./components/IncidentForm.jsx";
 import IncidentList from "./components/IncidentList";
 import "./index.css"; // Garante que o CSS seja carregado
 
@@ -10,22 +11,16 @@ const initial = [
 
 export default function App() {
   const [incidents, setIncidents] = useState(initial);
-  const [title, setTitle] = useState(""); 
 
-  // efeito: atualiza o titulo da aba sempre que a lista mudar
   useEffect(() => {
     const pending = incidents.filter((i) => !i.resolved).length;
     document.title = `Incidentes (${pending})`;
   }, [incidents]);
 
-  function handleAdd(event) {
-    event.preventDefault();
-    const clean = title.trim();
-    if (!clean) return;
-    const next = { id: Date.now(), title: clean, priority: "media", resolved: false };
-    setIncidents((prev) => [next, ...prev]);
-    setTitle("");
-  }
+  const handleCreate = (data) => {
+    const next = { id: Date.now(), ...data, resolved: false };
+    setIncidents((prev) => [...prev, next]);
+  };
 
   const handleToggle = (id) =>
     setIncidents((prev) =>
@@ -38,14 +33,7 @@ export default function App() {
   return (
     <main className="container">
       <h1>Painel de Incidentes</h1>
-      <form onSubmit={handleAdd} className="row">
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Descreva o incidente"
-        />
-        <button type="submit">Adicionar</button>
-      </form>
+      <IncidentForm onSubmit={handleCreate} />
       <IncidentList
         incidents={incidents}
         onToggle={handleToggle}
