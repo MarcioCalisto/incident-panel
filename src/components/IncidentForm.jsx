@@ -8,7 +8,7 @@ export default function incidentForm({ onSubmit, initalValues = EMPTY}) {
     const [values, setValues] = useState(initalValues);
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
-    const [submited, setSubmited] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState("");
 
     function handleChange(event) {
