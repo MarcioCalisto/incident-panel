@@ -1,11 +1,4 @@
 {
-  "incidents": [
-    {
-      "title": "fsdfsdf",
-      "description": "sdgsdgsdg",
-      "priority": "media",
-      "id": "V9dMQZ_G3g0"
-    }
-  ],
+  "incidents": [],
   "$schema": "./node_modules/json-server/schema.json"
 }
