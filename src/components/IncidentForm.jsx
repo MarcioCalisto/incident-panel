@@ -1,8 +1,9 @@
 // src/components/IncidentForm.jsx
 import { useState } from 'react';
-import { PRIORITES, hasErrors, validateIncident } from '../utils/validateIncident';
+import { PRIORIDADES, PRIORIDADE_PADRAO } from '../utils/constants.js';
+import { hasErrors, validateIncident } from '../utils/validateIncident.js';
 
-const EMPTY = { title: "", description: "", priority: "media" };
+const EMPTY = { title: "", description: "", priority: PRIORIDADE_PADRAO };
 
 export default function IncidentForm({ onSubmit, initialValues = EMPTY }) {
     const [values, setValues] = useState(initialValues);
@@ -92,7 +93,7 @@ export default function IncidentForm({ onSubmit, initialValues = EMPTY }) {
                     onChange={handleChange}
                     onBlur={handleBlur}
                 >
-                    {PRIORITES.map((p) => (
+                    {PRIORIDADES.map((p) => (
                         <option key={p} value={p}>{p}</option>
                     ))}
                 </select>
