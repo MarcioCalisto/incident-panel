@@ -1,4 +1,19 @@
 {
-  "incidents": [],
+  "incidents": [
+    {
+      "id": 1,
+      "title": "Sem acesso ao ERP",
+      "description": "Usuários relatam erro 500 ao acessar o sistema.",
+      "priority": "alta",
+      "resolved": false
+    },
+    {
+      "id": 2,
+      "title": "Impressora do 3º andar offline",
+      "description": "",
+      "priority": "baixa",
+      "resolved": true
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }
