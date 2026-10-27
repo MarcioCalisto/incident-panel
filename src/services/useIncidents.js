@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { incidentsApi } from "./incidentsApi.js";
 
 export function useIncidents() {
     const [incidents, setIncidents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const controllerRef = useRef(null);
 
     const load = useCallback(async (signal) => {
         setLoading(true);
@@ -21,9 +22,9 @@ export function useIncidents() {
     }, []);
 
     useEffect(() => {
-        const controller = new AbortController();
-        load(controller.signal);
-        return () => controller.abort();
+        controllerRef.current = new AbortController();
+        load(controllerRef.current.signal);
+        return () => controllerRef.current?.abort();
     }, [load]);
 
     const create = useCallback(async (payload) => {
@@ -43,5 +44,11 @@ export function useIncidents() {
         setIncidents((prev) => prev.filter((i) => i.id !== id));
     }, []);
 
-    return { incidents, loading, error, reload: () => load(), create, update, remove };
+    const reload = useCallback(() => {
+        controllerRef.current?.abort();
+        controllerRef.current = new AbortController();
+        return load(controllerRef.current.signal);
+    }, [load]);
+
+    return { incidents, loading, error, reload, create, update, remove };
 }
