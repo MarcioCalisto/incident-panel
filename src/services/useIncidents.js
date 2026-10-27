@@ -1,8 +1,7 @@
-// src/services/useIncidents.js
-import { useCallback, useEffect, useState} from "react";
-import { incidentsApi } from "./incidentsApi";
+import { useCallback, useEffect, useState } from "react";
+import { incidentsApi } from "./incidentsApi.js";
 
-export function useIncidents () {
+export function useIncidents() {
     const [incidents, setIncidents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -14,9 +13,9 @@ export function useIncidents () {
             const data = await incidentsApi.list(signal);
             setIncidents(data);
         } catch (err) {
-            if (err.name === "AbortError") return; // requisição cancelada: ignore
-            setError(err.message || "Falha ao carregar incidentes." )
-        } finally  {
+            if (err.name === "AbortError") return;
+            setError(err.message || "Falha ao carregar incidentes.");
+        } finally {
             setLoading(false);
         }
     }, []);
@@ -24,7 +23,7 @@ export function useIncidents () {
     useEffect(() => {
         const controller = new AbortController();
         load(controller.signal);
-        return () => controller.abort(); // evita atualizar estado após desmontar
+        return () => controller.abort();
     }, [load]);
 
     const create = useCallback(async (payload) => {
@@ -35,8 +34,6 @@ export function useIncidents () {
 
     const update = useCallback(async (id, changes) => {
         const updated = await incidentsApi.update(id, changes);
-        // ERRADO antes: "? update : i" colocava a FUNÇÃO no array.
-        // CERTO: substitui o item pelo retorno da API. O "...i" preserva campos que a API não devolveu.
         setIncidents((prev) => prev.map((i) => (i.id === id ? { ...i, ...updated } : i)));
         return updated;
     }, []);

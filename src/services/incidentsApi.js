@@ -11,8 +11,7 @@ const fromApi = (r) => ({
 
 export const incidentsApi = {
   list: async (signal) => {
-    const data = await request("/incidents", { signal });   // aqui `data` é declarada dentro da função
-    console.log("FORMATO DA API:", data[0]);                // temporário
+    const data = await request("/incidents", { signal });
     return data.map(fromApi);
   },
   create: async (payload) =>

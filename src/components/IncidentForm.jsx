@@ -37,7 +37,7 @@ export default function IncidentForm({ onSubmit, initialValues = EMPTY }) {
             await onSubmit({ ...values, title: values.title.trim() });
             setValues(EMPTY);
             setTouched({});
-            setErrors({});                 // ALTERADO (a): limpa erros antigos após salvar
+            setErrors({});
         } catch (error) {
             setSubmitError(error.message || "Não foi possível salvar o incidente");
         } finally {
@@ -58,7 +58,7 @@ export default function IncidentForm({ onSubmit, initialValues = EMPTY }) {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     aria-invalid={Boolean(showError("title"))}
-                    aria-describedby={showError("title") ? "title-error" : undefined}   // ALTERADO (b): só aponta quando o erro existe
+                    aria-describedby={showError("title") ? "title-error" : undefined}
                 />
                 {showError("title") && (
                     <p id="title-error" role="alert" className="error">{errors.title}</p>
@@ -74,8 +74,8 @@ export default function IncidentForm({ onSubmit, initialValues = EMPTY }) {
                     value={values.description}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    aria-invalid={Boolean(showError("description"))}                    // ALTERADO (c)
-                    aria-describedby={showError("description") ? "description-error" : undefined}  // ALTERADO (c)
+                    aria-invalid={Boolean(showError("description"))}
+                    aria-describedby={showError("description") ? "description-error" : undefined}
                 />
                 {showError("description") && (
                     <p id="description-error" role="alert" className="error">{errors.description}</p>
@@ -96,7 +96,7 @@ export default function IncidentForm({ onSubmit, initialValues = EMPTY }) {
                         <option key={p} value={p}>{p}</option>
                     ))}
                 </select>
-                {showError("priority") && (                                             // ALTERADO (d): exibe o erro da prioridade
+                {showError("priority") && (
                     <p id="priority-error" role="alert" className="error">{errors.priority}</p>
                 )}
             </div>
